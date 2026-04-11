@@ -5,9 +5,11 @@ public class Lesson {
     private String day;
     private String time;
     private double price;
+    private int week;
 
-    public Lesson(String name, String day, String time, double price) {
+    public Lesson(int week, String name, String day, String time, double price) {
         this.name = name;
+        this.week = week;
         this.day = day;
         this.time = time;
         this.price = price;
@@ -27,5 +29,9 @@ public class Lesson {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getWeek() {
+        return week;
     }
 }

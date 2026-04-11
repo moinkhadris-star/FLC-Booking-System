@@ -3,18 +3,18 @@ package main;
 import model.Member;
 import model.Lesson;
 import model.Booking;
+import service.LessonService;
 
 public class MainApp {
     public static void main(String[] args) {
 
-        Member m1 = new Member(1, "Moin");
+        LessonService lessonService = new LessonService();
+        lessonService.generateLessons();
 
-        Lesson lesson = new Lesson("Yoga", "Saturday", "Morning", 10.0);
+        System.out.println("---- Saturday Lessons ----");
+        lessonService.printLessons(lessonService.getLessonsByDay("Saturday"));
 
-        Booking booking = new Booking(1, m1, lesson);
-
-        System.out.println("Member: " + booking.getMember().getName());
-        System.out.println("Lesson: " + booking.getLesson().getName());
-        System.out.println("Status: " + booking.getStatus());
+        System.out.println("\n---- Yoga Lessons ----");
+        lessonService.printLessons(lessonService.getLessonsByExercise("Yoga"));
     }
 }
