@@ -5,9 +5,10 @@ public class Booking {
     private Member member;
     private Lesson lesson;
     private String status;
+    private static int counter = 1;
 
-    public Booking(int bookingId, Member member, Lesson lesson) {
-        this.bookingId = bookingId;
+    public Booking(Member member, Lesson lesson) {
+        this.bookingId = counter++;
         this.member = member;
         this.lesson = lesson;
         this.status = "booked";
