@@ -33,4 +33,8 @@ public class Booking {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
 }

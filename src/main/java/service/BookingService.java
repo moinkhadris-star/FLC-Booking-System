@@ -43,4 +43,92 @@ public class BookingService {
 
         return booking;
     }
+
+    public Booking findBookingById(int bookingId) {
+
+        for (Booking booking : bookings) {
+            if (booking.getBookingId() == bookingId) {
+                return booking;
+            }
+        }
+
+        return null;
+    }
+
+    public void cancelBooking(int bookingId) {
+
+        Booking booking = findBookingById(bookingId);
+
+        if (booking == null) {
+            System.out.println("Cancel failed: Booking not found");
+            return;
+        }
+
+        // Remove from lesson
+        booking.getLesson().getBookings().remove(booking);
+
+        // Remove from global list
+        bookings.remove(booking);
+
+        // Update status
+        booking.setStatus("cancelled");
+
+        System.out.println("Booking cancelled successfully");
+    }
+
+    public void changeBooking(int bookingId, Lesson newLesson) {
+
+        Booking booking = findBookingById(bookingId);
+
+        if (booking == null) {
+            System.out.println("Change failed: Booking not found");
+            return;
+        }
+
+        // Duplicate check
+        for (Booking b : newLesson.getBookings()) {
+            if (b.getMember().getId() == booking.getMember().getId()) {
+                System.out.println("Change failed: Duplicate booking not allowed");
+                return;
+            }
+        }
+
+        // Capacity check
+        if (newLesson.getBookings().size() >= 4) {
+            System.out.println("Change failed: New lesson is full");
+            return;
+        }
+
+        // Remove from old lesson
+        booking.getLesson().getBookings().remove(booking);
+
+        // Update lesson reference
+        booking.setLesson(newLesson);
+
+        // Add to new lesson
+        newLesson.getBookings().add(booking);
+
+        // Update status
+        booking.setStatus("changed");
+
+        System.out.println("Booking changed successfully");
+    }
+
+    private void updateLesson(Booking booking, Lesson newLesson) {
+
+        booking.setStatus("changed");
+
+        // update lesson reference
+        booking.getLesson().getBookings().remove(booking);
+
+        booking = booking; // keep same object
+        booking.getLesson(); // no-op (just clarity)
+
+        booking.setStatus("changed");
+
+        // assign new lesson
+        newLesson.getBookings().add(booking);
+    }
+
+
 }
