@@ -5,6 +5,7 @@ public class Booking {
     private Member member;
     private Lesson lesson;
     private String status;
+    private Review review;
     private static int counter = 1;
 
     public Booking(Member member, Lesson lesson) {
@@ -36,5 +37,13 @@ public class Booking {
 
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
+
+    public Review getReview() {
+        return review;
     }
 }

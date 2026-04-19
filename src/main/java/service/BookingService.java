@@ -3,7 +3,7 @@ package service;
 import model.Booking;
 import model.Lesson;
 import model.Member;
-
+import model.Review;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,6 +128,27 @@ public class BookingService {
 
         // assign new lesson
         newLesson.getBookings().add(booking);
+    }
+
+    public void attendLesson(int bookingId, int rating, String comment) {
+
+        Booking booking = findBookingById(bookingId);
+
+        if (booking == null) {
+            System.out.println("Attend failed: Booking not found");
+            return;
+        }
+
+        // Create review
+        Review review = new Review(rating, comment);
+
+        // Assign review
+        booking.setReview(review);
+
+        // Update status
+        booking.setStatus("attended");
+
+        System.out.println("Lesson attended and review added successfully");
     }
 
 

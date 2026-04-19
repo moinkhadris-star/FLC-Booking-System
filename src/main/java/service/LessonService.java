@@ -65,12 +65,15 @@ public class LessonService {
 
     public void printLessons(List<Lesson> lessonsList) {
         for (Lesson lesson : lessonsList) {
+            int booked = lesson.getBookings().size();
+            String status = (booked >= 4) ? "FULL" : booked + "/4";
             System.out.println(
                     "Week " + lesson.getWeek() + " | " +
                             lesson.getName() + " | " +
                             lesson.getDay() + " | " +
                             lesson.getTime() + " | £" +
-                            lesson.getPrice()
+                            lesson.getPrice() +
+                            " | Slots: " + lesson.getBookings().size() + "/4"
             );
         }
     }

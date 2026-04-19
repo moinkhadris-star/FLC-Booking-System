@@ -5,6 +5,11 @@ public class Review {
     private String comment;
 
     public Review(int rating, String comment) {
+
+        if (rating < 1 || rating > 5) {
+            throw new IllegalArgumentException("Rating must be between 1 and 5");
+        }
+
         this.rating = rating;
         this.comment = comment;
     }
