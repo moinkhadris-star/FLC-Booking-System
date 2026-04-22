@@ -209,6 +209,13 @@ public class MainApp {
                     int bId = scanner.nextInt();
                     scanner.nextLine();
 
+                    System.out.println("\nRate the lesson:");
+                    System.out.println("1 - Very dissatisfied");
+                    System.out.println("2 - Dissatisfied");
+                    System.out.println("3 - Ok");
+                    System.out.println("4 - Satisfied");
+                    System.out.println("5 - Very satisfied");
+
                     System.out.print("Enter rating (1-5): ");
                     int rating = scanner.nextInt();
                     scanner.nextLine();
