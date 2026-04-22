@@ -28,6 +28,9 @@ public class MainApp {
 
 
         while (true) {
+            System.out.println("\n--------------------------------");
+            System.out.println("Main Menu");
+            System.out.println("--------------------------------");
             System.out.println("1. View Timetable");
             System.out.println("2. Book Lesson");
             System.out.println("3. Change / Cancel Booking");
