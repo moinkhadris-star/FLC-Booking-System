@@ -15,7 +15,7 @@ public class ReportService {
         this.bookings = bookings;
     }
 
-    public void generateMonthlyReport(String month){
+    public void generateMonthlyReport(int monthChoice){
 
         System.out.println("\n---- Monthly Lesson Report ----");
 
@@ -25,33 +25,48 @@ public class ReportService {
 
             Lesson lesson = b.getLesson();
 
+            int week = lesson.getWeek();
+
+            if (monthChoice == 1 && week > 4) {
+                continue;
+            }
+
+            if (monthChoice == 2 && week <= 4) {
+                continue;
+            }
+
             if (processed.contains(lesson)) {
                 continue;
             }
 
             processed.add(lesson);
 
+            int attendedCount = 0;
             double totalRating = 0;
-            int count = 0;
+            int ratingCount = 0;
 
             for (Booking lb : lesson.getBookings()) {
-                if (lb.getReview() != null) {
-                    totalRating += lb.getReview().getRating();
-                    count++;
+                if (lb.getStatus().equals("attended")) {
+
+                    attendedCount++;
+
+                    if (lb.getReview() != null) {
+                        totalRating += lb.getReview().getRating();
+                        ratingCount++;
+                    }
                 }
             }
 
-            double avgRating = (count == 0) ? 0 : totalRating / count;
-
+            double avgRating = (ratingCount == 0) ? 0 : totalRating / ratingCount;
             System.out.println(
                     lesson.getName() + " | Week " + lesson.getWeek() +
-                            " | Members: " + lesson.getBookings().size() +
+                            " | Members: " + attendedCount +
                             " | Avg Rating: " + avgRating
             );
         }
     }
 
-    public void generateChampionReport() {
+    public void generateChampionReport(int monthChoice) {
 
         System.out.println("\n---- Champion Exercise Report ----");
 
@@ -60,6 +75,20 @@ public class ReportService {
         for (Booking b : bookings) {
 
             Lesson lesson = b.getLesson();
+            int week = lesson.getWeek();
+
+            if (monthChoice == 1 && week > 4) {
+                continue;
+            }
+
+            if (monthChoice == 2 && week <= 4) {
+                continue;
+            }
+
+            if (!b.getStatus().equals("attended")) {
+                continue;
+            }
+
             String exercise = lesson.getName();
             double price = lesson.getPrice();
 

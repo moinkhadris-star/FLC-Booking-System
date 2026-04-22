@@ -223,15 +223,28 @@ public class MainApp {
 
                 case 5:
 
-                    System.out.print("Enter month (e.g., 05): ");
-                    String month = scanner.nextLine();
+                    System.out.println("Select Month:");
+                    System.out.println("1. May");
+                    System.out.println("2. June");
 
-                    reportService.generateMonthlyReport(month);
+                    int monthChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    reportService.generateMonthlyReport(monthChoice);
 
                     break;
 
                 case 6:
-                    reportService.generateChampionReport();
+
+                    System.out.println("Select Month:");
+                    System.out.println("1. May");
+                    System.out.println("2. June");
+
+                    int championMonthChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    reportService.generateChampionReport(championMonthChoice);
+
                     break;
 
                 case 0:
