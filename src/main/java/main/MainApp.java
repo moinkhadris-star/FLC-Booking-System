@@ -6,6 +6,9 @@ import service.LessonService;
 import service.BookingService;
 import model.Booking;
 import java.util.Scanner;
+import service.ReportService;
+import service.MemberLoader;
+import java.util.List;
 
 
 public class MainApp {
@@ -17,17 +20,19 @@ public class MainApp {
         lessonService.generateLessons();
 
         BookingService bookingService = new BookingService();
+        ReportService reportService =
+                new ReportService(bookingService.getAllBookings());
 
-        // Sample members
-        Member m1 = new Member(1, "Moin");
-        Member m2 = new Member(2, "Ali");
+        MemberLoader loader = new MemberLoader();
+        List<Member> members = loader.loadMembers("members.csv");
+
 
         while (true) {
-
-            System.out.println("\n===== FLC Booking System =====");
             System.out.println("1. View Timetable");
             System.out.println("2. Book Lesson");
             System.out.println("3. Attend Lesson");
+            System.out.println("4. Monthly Report");
+            System.out.println("5. Champion Exercise Report");
             System.out.println("0. Exit");
 
             System.out.print("Enter choice: ");
@@ -68,22 +73,27 @@ public class MainApp {
 
                 case 2:
 
-                    // Select member
                     System.out.println("\n---- Members ----");
-                    System.out.println("1. Moin");
-                    System.out.println("2. Ali");
+
+                    for (Member m : members) {
+                        System.out.println(m.getId() + ". " + m.getName());
+                    }
 
                     System.out.print("Select Member ID: ");
                     int memberId = scanner.nextInt();
                     scanner.nextLine();
 
+
                     Member selectedMember = null;
 
-                    if (memberId == 1) {
-                        selectedMember = m1;
-                    } else if (memberId == 2) {
-                        selectedMember = m2;
-                    } else {
+                    for (Member m : members) {
+                        if (m.getId() == memberId) {
+                            selectedMember = m;
+                            break;
+                        }
+                    }
+
+                    if (selectedMember == null) {
                         System.out.println("Invalid Member ID");
                         break;
                     }
@@ -149,6 +159,14 @@ public class MainApp {
                     // Call service
                     bookingService.attendLesson(bId, rating, comment);
 
+                    break;
+
+                case 4:
+                    reportService.generateMonthlyReport();
+                    break;
+
+                case 5:
+                    reportService.generateChampionReport();
                     break;
 
                 case 0:
