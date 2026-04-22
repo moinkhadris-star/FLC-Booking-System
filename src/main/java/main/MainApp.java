@@ -30,9 +30,10 @@ public class MainApp {
         while (true) {
             System.out.println("1. View Timetable");
             System.out.println("2. Book Lesson");
-            System.out.println("3. Attend Lesson");
-            System.out.println("4. Monthly Report");
-            System.out.println("5. Champion Exercise Report");
+            System.out.println("3. Change / Cancel Booking");
+            System.out.println("4. Attend Lesson");
+            System.out.println("5. Monthly Report");
+            System.out.println("6. Champion Exercise Report");
             System.out.println("0. Exit");
 
             System.out.print("Enter choice: ");
@@ -128,6 +129,65 @@ public class MainApp {
 
                 case 3:
 
+                    System.out.println("\n---- Your Bookings ----");
+
+                    for (Booking b : bookingService.getAllBookings()) {
+                        System.out.println("ID: " + b.getBookingId() +
+                                " | " + b.getMember().getName() +
+                                " | " + b.getLesson().getName() +
+                                " | Week " + b.getLesson().getWeek() +
+                                " | Status: " + b.getStatus());
+                    }
+
+                    if (bookingService.getAllBookings().isEmpty()) {
+                        System.out.println("No bookings available");
+                        break;
+                    }
+
+                    System.out.print("\nEnter Booking ID: ");
+                    int bookingId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("1. Change Booking");
+                    System.out.println("2. Cancel Booking");
+
+                    int action = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (action == 2) {
+                        bookingService.cancelBooking(bookingId);
+                    } else if (action == 1) {
+
+                        System.out.println("\n---- Available Lessons ----");
+
+                        int newIndex  = 1;
+                        for (Lesson l : lessonService.getAllLessons()) {
+                            System.out.println(newIndex  + ". Week " + l.getWeek() + " | " +
+                                    l.getName() + " | " + l.getDay() + " | " + l.getTime());
+                            newIndex ++;
+                        }
+
+                        System.out.print("\nEnter new lesson number: ");
+                        int newLessonChoice = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (newLessonChoice < 1 || newLessonChoice > lessonService.getAllLessons().size()) {
+                            System.out.println("Invalid lesson selection");
+                            break;
+                        }
+
+                        Lesson newLesson =
+                                lessonService.getAllLessons().get(newLessonChoice - 1);
+
+                        bookingService.changeBooking(bookingId, newLesson);
+                    } else {
+                        System.out.println("Invalid option");
+                    }
+
+                    break;
+
+                case 4:
+
                     // Show bookings first
                     System.out.println("\n---- Your Bookings ----");
 
@@ -161,11 +221,16 @@ public class MainApp {
 
                     break;
 
-                case 4:
-                    reportService.generateMonthlyReport();
+                case 5:
+
+                    System.out.print("Enter month (e.g., 05): ");
+                    String month = scanner.nextLine();
+
+                    reportService.generateMonthlyReport(month);
+
                     break;
 
-                case 5:
+                case 6:
                     reportService.generateChampionReport();
                     break;
 

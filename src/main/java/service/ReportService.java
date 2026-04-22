@@ -15,7 +15,7 @@ public class ReportService {
         this.bookings = bookings;
     }
 
-    public void generateMonthlyReport() {
+    public void generateMonthlyReport(String month){
 
         System.out.println("\n---- Monthly Lesson Report ----");
 
