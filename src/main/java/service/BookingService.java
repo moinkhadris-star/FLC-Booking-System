@@ -21,7 +21,6 @@ public class BookingService {
 
     public Booking bookLesson(Member member, Lesson lesson) {
 
-        // Step 3.6.1 → Duplicate check
         for (Booking b : lesson.getBookings()) {
             if (b.getMember().getId() == member.getId()) {
                 System.out.println("Booking failed: Duplicate booking not allowed");
@@ -40,6 +39,7 @@ public class BookingService {
         lesson.getBookings().add(booking);
 
         System.out.println("Booking successful for " + member.getName());
+        System.out.println("Booking ID: " + booking.getBookingId());
 
         return booking;
     }

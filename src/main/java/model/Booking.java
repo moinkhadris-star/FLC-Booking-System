@@ -6,10 +6,10 @@ public class Booking {
     private Lesson lesson;
     private String status;
     private Review review;
-    private static int counter = 1;
 
     public Booking(Member member, Lesson lesson) {
-        this.bookingId = counter++;
+
+        this.bookingId = generateRandomId();
         this.member = member;
         this.lesson = lesson;
         this.status = "booked";
@@ -45,5 +45,20 @@ public class Booking {
 
     public Review getReview() {
         return review;
+    }
+
+    private int generateRandomId() {
+
+        int id;
+
+        while (true) {
+            id = (int)(Math.random() * 900) + 100;
+
+            if (id != 0) {
+                break;
+            }
+        }
+
+        return id;
     }
 }
